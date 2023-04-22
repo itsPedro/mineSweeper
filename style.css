@@ -2,12 +2,36 @@
     font-family: 'Roboto', sans-serif;
 }
 
-.game {
-    display: grid;
-    border: 2px solid red;
+body {
+    background-color: rgb(29, 46, 54);
 }
 
-.square {
-    background-color: black;
-    border: 1px solid white;
+.game {
+    display: grid;
+    height: 500px;
+    width: 500px;
+    margin: auto;
+
+}
+
+.cell {
+    background-color: rgb(122, 199, 234);
+    position: relative;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.revealed {
+    content: "";
+    background-color: rgb(29, 46, 54);
+}
+.bomb {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(200, 35, 13);
+    width: 100%;
+    height: 100%;
 }
