@@ -1,0 +1,13 @@
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+.game {
+    display: grid;
+    border: 2px solid red;
+}
+
+.square {
+    background-color: black;
+    border: 1px solid white;
+}
