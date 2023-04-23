@@ -69,6 +69,7 @@ class game {
   }
 
   settings() {
+    clearInterval(this.timerId);
     document.querySelector(".game").classList.add("game-settings");
     document.querySelector(".game-settings").innerHTML =
       "<div><h1>Configurações</h1><form onsubmit=createGame(event)><div><label for=\"rows\">Linhas</label><input type=\"number\" id=\"rows\" name=\"rows\" value=\"10\" min=\"1\" max=\"50\"></div><div><label for=\"cols\">Colunas</label><input type=\"number\" id=\"cols\" name=\"cols\" value=\"10\" min=\"1\" max=\"50\"></div><div><label for=\"mines\">Minas</label><input type=\"number\" id=\"mines\" name=\"mines\" value=\"10\" min=\"1\" max=\"50\"></div><button class=\"btn\">Confirmar</button></form>"
