@@ -228,6 +228,6 @@ const createGame = (event) => {
 }
 
 if(!document.querySelector(".cell")) {
-  const Game = new game(17, 17, 20);
+ const Game = isMobileDevice() ? new game(20, 10, 10) : new game(17, 17, 10);
   Game.display();
 }
