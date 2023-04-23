@@ -43,7 +43,7 @@ class game {
     clearInterval(this.timerId);
     document.querySelector(".game").classList.add("game-over");
     document.querySelector(".game-over").innerHTML =
-      "<div><h1>:(</h1><h2>BOOOOOOOOM!</h2> <h3>Pressione \"space\" ou clique no botão para reiniciar</h3><button class=\"btn restart\">Reiniciar</button></div>";
+      "<div class=\"game-over-container\"><h1>:(</h1><h2>BOOOOOOOOM!</h2> <h3>Clique no botão para reiniciar</h3><button class=\"btn restart\">Reiniciar</button></div>";
     document.querySelector(".restart").addEventListener("click", () => {
       location.reload();
     });
@@ -54,7 +54,7 @@ class game {
     clearInterval(this.timerId);
     document.querySelector(".game").classList.add("game-settings");
     document.querySelector(".game-settings").innerHTML =
-      "<div><h1>Configurações</h1><form onsubmit=createGame(event)><div><label for=\"rows\">Linhas</label><input type=\"number\" id=\"rows\" name=\"rows\" value=\"10\" min=\"10\" max=\"30\"></div><div><label for=\"cols\">Colunas</label><input type=\"number\" id=\"cols\" name=\"cols\" value=\"10\" min=\"10\" max=\"30\"></div><div><label for=\"mines\">Minas</label><input type=\"number\" id=\"mines\" name=\"mines\" value=\"10\" min=\"10\" max=\"30\"></div><button class=\"btn\">Confirmar</button></form>"
+      "<div class=\"settings-container\"><h1>Configurações</h1><form onsubmit=createGame(event)><div><label for=\"rows\">Linhas</label><input type=\"number\" id=\"rows\" name=\"rows\" value=\"10\" min=\"10\" max=\"30\"></div><div><label for=\"cols\">Colunas</label><input type=\"number\" id=\"cols\" name=\"cols\" value=\"10\" min=\"10\" max=\"30\"></div><div><label for=\"mines\">Minas</label><input type=\"number\" id=\"mines\" name=\"mines\" value=\"10\" min=\"10\" max=\"30\"></div><button class=\"btn\">Confirmar</button></form>"
   }
 
   revealCells(row, col, gameGrid) {
@@ -112,7 +112,7 @@ class game {
     document.querySelector(".stats-mines").innerHTML = `${this.numMines}`;
 
     const board = document.querySelector(".game");
-    const pixeis = isMobileDevice() || this.rows >= 18 || this.cols >= 18 ? "25px" : "45px";
+    const pixeis = isMobileDevice() || this.rows >= 18 || this.cols >= 18 ? "30px" : "45px";
     board.style.gridTemplateColumns = `repeat(${this.cols}, ${pixeis})`;
     board.style.gridTemplateRows = `repeat(${this.rows}, ${pixeis})`;
     let gameGrid = this.make2DArray();
