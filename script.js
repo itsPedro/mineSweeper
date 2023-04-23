@@ -1,4 +1,27 @@
+const createGame = (event) => {
+  event.preventDefault();
+  let rows = document.getElementById("rows").value;
+  let cols = document.getElementById("cols").value;
+  let mines = document.getElementById("mines").value;  
+  resetGame();
+  let newGame = new game(rows, cols, mines);
+  newGame.display();
+
+}
+
+const resetGame = () => {
+  const gameElement = document.querySelector('.game');
+  gameElement.innerHTML = '';
+  gameElement.classList.remove('game-settings', 'game-over');
+};
+
+
 class game {
+
+  timer = 0;
+  timerId = null;
+  isStart = false;
+
   constructor(x, y, mines) {
     this.rows = x;
     this.cols = y;
@@ -16,21 +39,49 @@ class game {
     return arr;
   }
 
+  startTimer() {
+    if (this.timerId) {
+      return clearInterval(this.timerId);
+    }
+    this.timerId = setInterval(() => {
+      ++this.timer;
+      this.updateTimerDisplay();
+    }, 1000);
+  }
+
+  updateTimerDisplay() {
+    const timerDisplay = document.querySelector('.timer');
+    timerDisplay.innerText = `${this.timer.toString().padStart(3, '0')}s`
+  }
+  
+
   gameOver() {
+
+    resetGame();
     document.querySelector(".game").classList.add("game-over");
     document.querySelector(".game-over").innerHTML =
-      "<div><h1>:(</h1><h2>BOOOOOOOOM!</h2> <h3>Pressione \"space\" ou clique no botão para reiniciar</h3><button>Reiniciar</button></div>";
-    //TODO: add restart button func and space func 
+      "<div><h1>:(</h1><h2>BOOOOOOOOM!</h2> <h3>Pressione \"space\" ou clique no botão para reiniciar</h3><button class=\"btn restart\">Reiniciar</button></div>";
     document.querySelector("button").addEventListener("click", () => {
-        location.reload();
+      location.reload();
     });
 
+  }
+
+  settings() {
+    document.querySelector(".game").classList.add("game-settings");
+    document.querySelector(".game-settings").innerHTML =
+      "<div><h1>Configurações</h1><form onsubmit=createGame(event)><div><label for=\"rows\">Linhas</label><input type=\"number\" id=\"rows\" name=\"rows\" value=\"10\" min=\"1\" max=\"50\"></div><div><label for=\"cols\">Colunas</label><input type=\"number\" id=\"cols\" name=\"cols\" value=\"10\" min=\"1\" max=\"50\"></div><div><label for=\"mines\">Minas</label><input type=\"number\" id=\"mines\" name=\"mines\" value=\"10\" min=\"1\" max=\"50\"></div><button class=\"btn\">Confirmar</button></form>"
   }
 
   revealCells(row, col, gameGrid) {
 
     let cell = gameGrid[row][col];
     
+    if (!this.isStart) {
+      this.startTimer();
+      this.isStart = true;
+    }
+
     if (cell.isReveal || cell.isFlagged) {
         return;
     }
@@ -43,7 +94,8 @@ class game {
       const bombIcon = cellClicked.appendChild(document.createElement("i"));
       bombIcon.classList.add("fa-solid", "fa-bomb", "fa-lg");
       bombIcon.style.color = "#ffffff";
-      this.gameOver()
+      this.end = new Date().getTime();
+      this.gameOver();
     } else {
 
         let adjacentCells = cell.adjacentCells(gameGrid);
@@ -72,6 +124,10 @@ class game {
   }
 
   setup() {
+    const settings = document.querySelector(".settings");
+    settings.addEventListener("click", () => this.settings());
+    document.querySelector(".stats-mines").innerHTML = `${this.numMines}`;
+
     const board = document.querySelector(".game");
     const pixeis = this.rows >= 18 || this.cols >= 18 ? "25px" : "45px";
     board.style.gridTemplateColumns = `repeat(${this.cols}, ${pixeis})`;
@@ -84,11 +140,11 @@ class game {
           const cellClicked = document.getElementById(`${i},${j}`);
           cellClicked.addEventListener("click", () => {
               this.revealCells(i, j, gameGrid);
-        });
-        cellClicked.addEventListener("contextmenu", (event) => {
-            event.preventDefault();
-            gameGrid[i][j].flagCell(i, j,gameGrid);
-        });
+          });
+          cellClicked.addEventListener("contextmenu", (event) => {
+              event.preventDefault();
+              gameGrid[i][j].flagCell(i, j,gameGrid);
+          });
       };
     }
     this.gameGrid = gameGrid;
@@ -146,7 +202,7 @@ class cell {
     }
 
     const cellClicked = document.getElementById(`${this.x},${this.y}`);
-    const flag = cellClicked.lastChild
+    const flag = cellClicked.lastChild;
     if (flag) {
         cell.setFlagged();
         cellClicked.classList.toggle('flagged');

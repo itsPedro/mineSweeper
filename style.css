@@ -1,5 +1,6 @@
 * {
-    font-family: 'Roboto', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 body {
@@ -78,7 +79,7 @@ body {
     font-size: 20px;
 }
 
-.game-over button {
+.btn {
     border: none;
     color:aliceblue;
     cursor: pointer;
@@ -88,6 +89,55 @@ body {
     padding: 10px 20px;
 }
 
-.game-over button:hover {
+.btn:hover {
     background-color: rgb(41, 70, 84);
 }
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-around   ;
+    height: 80px;
+    color:aliceblue
+}
+
+.game-settings {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 800px;
+    width: 600px;
+    border-radius: 8px;
+    border: 1px solid rgb(122, 199, 234);
+    background-color: rgb(29, 46, 54);
+    color: rgb(122, 199, 234);
+}
+.game-settings form {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-bottom: 30px;
+}
+
+.game-settings div {
+    display: flex;
+    flex-direction: column;
+}
+
+.game-settings label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.game-settings input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+    .cell {
+      font-size: 12px;
+    }
+  }
