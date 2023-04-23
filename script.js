@@ -112,7 +112,7 @@ class game {
     document.querySelector(".stats-mines").innerHTML = `${this.numMines}`;
 
     const board = document.querySelector(".game");
-    const pixeis = this.rows >= 18 || this.cols >= 18 ? "25px" : "45px";
+    const pixeis = isMobileDevice() || this.rows >= 18 || this.cols >= 18 ? "25px" : "45px";
     board.style.gridTemplateColumns = `repeat(${this.cols}, ${pixeis})`;
     board.style.gridTemplateRows = `repeat(${this.rows}, ${pixeis})`;
     let gameGrid = this.make2DArray();
@@ -206,6 +206,10 @@ class cell {
   }
 
 };
+
+function isMobileDevice() {
+  return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+}
 
 const resetGame = () => {
   const gameElement = document.querySelector('.game');
