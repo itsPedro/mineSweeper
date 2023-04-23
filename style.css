@@ -55,7 +55,39 @@ body {
 }
 
 
-.game-over {
+.game-win {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.game-win-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    height: 800px;
+    width: 600px;
+    border-radius: 8px;
+    border: 1px solid rgb(122, 199, 234);
+    background-color: rgb(29, 46, 54);
+    color: rgb(122, 199, 234);
+}
+
+.game-win h1 {
+    font-size: 100px;
+}
+.game-win h2 {
+    font-size: 25px;
+    color: rgb(41, 200, 13);
+}
+.game-win h3 {
+    font-size: 20px;
+}
+
+
+.game-win {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -85,6 +117,7 @@ body {
 .game-over h3 {
     font-size: 20px;
 }
+
 
 .btn {
     border: none;
@@ -166,6 +199,15 @@ body {
     }
 
     .game-over-container h3{
+        font-size: 17px;        
+    }
+
+    .game-win-container {
+        height: 650px;
+        width: 300px;
+    }
+
+    .game-win-container h3{
         font-size: 17px;        
     }
 

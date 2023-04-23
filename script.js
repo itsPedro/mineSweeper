@@ -57,6 +57,54 @@ class game {
       "<div class=\"settings-container\"><h1>Configurações</h1><form onsubmit=createGame(event)><div><label for=\"rows\">Linhas</label><input type=\"number\" id=\"rows\" name=\"rows\" value=\"10\" min=\"10\" max=\"30\"></div><div><label for=\"cols\">Colunas</label><input type=\"number\" id=\"cols\" name=\"cols\" value=\"10\" min=\"10\" max=\"30\"></div><div><label for=\"mines\">Minas</label><input type=\"number\" id=\"mines\" name=\"mines\" value=\"10\" min=\"10\" max=\"30\"></div><button class=\"btn\">Confirmar</button></form>"
   }
 
+  gameWin() {
+
+    const totalTime = this.timer;
+    clearInterval(this.timerId);
+    document.querySelector(".game").classList.add("game-win");
+    
+    document.querySelector(".game-win").innerHTML =
+      "<div class=\"game-win-container\"><h1>:)</h1><h2>Parabéns, vocé venceu!</h2> <h3>Tempo: " + totalTime + "s</h3><button class=\"btn restart\">Reiniciar</button>"
+    document.querySelector(".restart").addEventListener("click", () => {
+      location.reload();
+    });
+
+    const cells = document.querySelectorAll(".cell");
+    cells.forEach((cell) => {
+      cell.removeEventListener("click", cellClickHandler);
+      cell.removeEventListener("contextmenu", cellContextMenuHandler);
+    });
+
+  }
+
+  updateStats() {
+
+    const statsMines = document.querySelector(".stats-mines");
+    statsMines.innerHTML = `${this.numMines}`;
+
+  }
+  
+  checkGameWin() {
+    let gameWin = true;
+    console.log('check')
+    for (let i = 0; i < this.rows; i++) {
+      for (let j = 0; j < this.cols; j++) {
+        let cell = this.gameGrid[i][j];
+        if (
+          (!cell.isMine && !cell.isReveal) ||
+          (!cell.isMine && cell.isFlagged) ||
+          (cell.isMine && !cell.isFlagged)
+          ) {
+            gameWin = false;
+            return;
+          }
+      }
+    }
+    if(gameWin) {
+      this.gameWin();
+    }
+  }
+
   revealCells(row, col, gameGrid) {
 
     let cell = gameGrid[row][col];
@@ -109,7 +157,7 @@ class game {
   setup() {
     const settings = document.querySelector(".settings");
     settings.addEventListener("click", () => this.settings());
-    document.querySelector(".stats-mines").innerHTML = `${this.numMines}`;
+    this.updateStats();
 
     const board = document.querySelector(".game");
     const pixeis = isMobileDevice() || this.rows >= 18 || this.cols >= 18 ? "30px" : "45px";
@@ -121,11 +169,13 @@ class game {
           gameGrid[i][j].draw(board, gameGrid);
           const cellClicked = document.getElementById(`${i},${j}`);
           cellClicked.addEventListener("click", () => {
-              this.revealCells(i, j, gameGrid);
+            this.revealCells(i, j, gameGrid);
+            this.checkGameWin();
           });
           cellClicked.addEventListener("contextmenu", (event) => {
-              event.preventDefault();
-              gameGrid[i][j].flagCell(i, j,gameGrid);
+            event.preventDefault();
+            gameGrid[i][j].flagCell(i, j,gameGrid);
+            this.checkGameWin();
           });
       };
     }
