@@ -248,7 +248,7 @@ class cell {
         cell.setFlagged();
         cellClicked.classList.toggle('flagged');
         const flagIcon = cellClicked.appendChild(document.createElement("i"));
-        isMobileDevice() ? flagIcon.classList.add("fa-solid", "fa-flag", "fa-2x") : flagIcon.classList.add("fa-solid", "fa-flag", "fa-lg");
+        isMobileDevice() ? flagIcon.classList.add("fa-solid", "fa-flag") : flagIcon.classList.add("fa-solid", "fa-flag", "fa-lg");
         flagIcon.style.color = "#ffffff";
     }
   
