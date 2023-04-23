@@ -3,13 +3,12 @@
 }
 
 body {
-    background-color: rgb(29, 46, 54);
+    background-color: rgb(40, 62, 73);
 }
 
 .game {
     display: grid;
-    height: 500px;
-    width: 500px;
+    width: 750px;
     margin: auto;
 
 }
@@ -20,13 +19,15 @@ body {
     text-align: center;
     color: white;
     cursor: pointer;
-    border-radius: 6px;
 }
 
 .revealed {
     content: "";
+    border: 0.2px solid rgba(240, 248, 255, 0.328);
     background-color: rgb(29, 46, 54);
 }
+
+
 .bomb {
     display: flex;
     justify-content: center;
@@ -34,4 +35,59 @@ body {
     background-color: rgb(200, 35, 13);
     width: 100%;
     height: 100%;
+}
+
+.flagged {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(150, 171, 181);
+    width: 100%;
+    height: 100%;
+}
+
+.number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4em;
+}
+
+
+.game-over {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    height: 800px;
+    width: 600px;
+    border-radius: 8px;
+    border: 1px solid rgb(122, 199, 234);
+    background-color: rgb(29, 46, 54);
+    color: rgb(122, 199, 234);
+}
+
+.game-over h1 {
+    font-size: 50px;
+}
+.game-over h2 {
+    font-size: 30px;
+    color: rgb(200, 35, 13);
+}
+.game-over h3 {
+    font-size: 20px;
+}
+
+.game-over button {
+    border: none;
+    color:aliceblue;
+    cursor: pointer;
+    font-size: 12px;
+    background-color: rgb(122, 199, 234);
+    border-radius: 8px;
+    padding: 10px 20px;
+}
+
+.game-over button:hover {
+    background-color: rgb(41, 70, 84);
 }
