@@ -1,21 +1,3 @@
-const createGame = (event) => {
-  event.preventDefault();
-  let rows = document.getElementById("rows").value;
-  let cols = document.getElementById("cols").value;
-  let mines = document.getElementById("mines").value;  
-  resetGame();
-  let newGame = new game(rows, cols, mines);
-  newGame.display();
-
-}
-
-const resetGame = () => {
-  const gameElement = document.querySelector('.game');
-  gameElement.innerHTML = '';
-  gameElement.classList.remove('game-settings', 'game-over');
-};
-
-
 class game {
 
   timer = 0;
@@ -31,9 +13,9 @@ class game {
   make2DArray() {
     let arr = new Array(this.rows);
     for (let i = 0; i < arr.length; i++) {
-      arr[i] = new Array(this.rows);
+      arr[i] = new Array(this.cols);
       for (let j = 0; j < this.cols; j++) {
-        arr[i][j] = new Array(this.cols);
+        arr[i][j] = new cell(i, j);
       }
     }
     return arr;
@@ -72,7 +54,7 @@ class game {
     clearInterval(this.timerId);
     document.querySelector(".game").classList.add("game-settings");
     document.querySelector(".game-settings").innerHTML =
-      "<div><h1>Configurações</h1><form onsubmit=createGame(event)><div><label for=\"rows\">Linhas</label><input type=\"number\" id=\"rows\" name=\"rows\" value=\"10\" min=\"1\" max=\"50\"></div><div><label for=\"cols\">Colunas</label><input type=\"number\" id=\"cols\" name=\"cols\" value=\"10\" min=\"1\" max=\"50\"></div><div><label for=\"mines\">Minas</label><input type=\"number\" id=\"mines\" name=\"mines\" value=\"10\" min=\"1\" max=\"50\"></div><button class=\"btn\">Confirmar</button></form>"
+      "<div><h1>Configurações</h1><form onsubmit=createGame(event)><div><label for=\"rows\">Linhas</label><input type=\"number\" id=\"rows\" name=\"rows\" value=\"10\" min=\"10\" max=\"30\"></div><div><label for=\"cols\">Colunas</label><input type=\"number\" id=\"cols\" name=\"cols\" value=\"10\" min=\"10\" max=\"30\"></div><div><label for=\"mines\">Minas</label><input type=\"number\" id=\"mines\" name=\"mines\" value=\"10\" min=\"10\" max=\"30\"></div><button class=\"btn\">Confirmar</button></form>"
   }
 
   revealCells(row, col, gameGrid) {
@@ -96,7 +78,6 @@ class game {
       const bombIcon = cellClicked.appendChild(document.createElement("i"));
       bombIcon.classList.add("fa-solid", "fa-bomb", "fa-lg");
       bombIcon.style.color = "#ffffff";
-      this.end = new Date().getTime();
       this.gameOver();
     } else {
 
@@ -137,7 +118,6 @@ class game {
     let gameGrid = this.make2DArray();
     for (let i = 0; i < gameGrid.length; i++) {
       for (let j = 0; j < gameGrid[i].length; j++) {
-          gameGrid[i][j] = new cell(i, j);
           gameGrid[i][j].draw(board, gameGrid);
           const cellClicked = document.getElementById(`${i},${j}`);
           cellClicked.addEventListener("click", () => {
@@ -227,5 +207,23 @@ class cell {
 
 };
 
-const Game = new game(17, 17, 20);
-Game.display();
+const resetGame = () => {
+  const gameElement = document.querySelector('.game');
+  gameElement.innerHTML = '';
+  gameElement.classList.remove('game-settings', 'game-over');
+};
+
+const createGame = (event) => {
+  event.preventDefault();
+  const rows = parseInt(document.querySelector("#rows").value);
+  const cols = parseInt(document.querySelector("#cols").value);
+  const mines = parseInt(document.querySelector("#mines").value);
+  resetGame();
+  const Game = new game(rows, cols, mines);
+  Game.display();
+}
+
+if(!document.querySelector(".cell")) {
+  const Game = new game(17, 17, 20);
+  Game.display();
+}
