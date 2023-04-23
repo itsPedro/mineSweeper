@@ -61,7 +61,7 @@ class game {
     document.querySelector(".game").classList.add("game-over");
     document.querySelector(".game-over").innerHTML =
       "<div><h1>:(</h1><h2>BOOOOOOOOM!</h2> <h3>Pressione \"space\" ou clique no botão para reiniciar</h3><button class=\"btn restart\">Reiniciar</button></div>";
-    document.querySelector("button").addEventListener("click", () => {
+    document.querySelector(".restart").addEventListener("click", () => {
       location.reload();
     });
 
