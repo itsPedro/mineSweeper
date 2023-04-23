@@ -54,7 +54,11 @@ class game {
     clearInterval(this.timerId);
     document.querySelector(".game").classList.add("game-settings");
     document.querySelector(".game-settings").innerHTML =
-      "<div class=\"settings-container\"><h1>Configurações</h1><form onsubmit=createGame(event)><div><label for=\"rows\">Linhas</label><input type=\"number\" id=\"rows\" name=\"rows\" value=\"10\" min=\"10\" max=\"30\"></div><div><label for=\"cols\">Colunas</label><input type=\"number\" id=\"cols\" name=\"cols\" value=\"10\" min=\"10\" max=\"30\"></div><div><label for=\"mines\">Minas</label><input type=\"number\" id=\"mines\" name=\"mines\" value=\"10\" min=\"10\" max=\"30\"></div><button class=\"btn\">Confirmar</button></form>"
+      "<div class=\"settings-container\"><button class=\"btn back-btn\"><i class=\"fa-solid fa-angle-left\"></i></button><h1>Configurações</h1><form onsubmit=createGame(event)><div><label for=\"rows\">Linhas</label><input type=\"number\" id=\"rows\" name=\"rows\" value=\"10\" min=\"10\" max=\"30\"></div><div><label for=\"cols\">Colunas</label><input type=\"number\" id=\"cols\" name=\"cols\" value=\"10\" min=\"10\" max=\"30\"></div><div><label for=\"mines\">Minas</label><input type=\"number\" id=\"mines\" name=\"mines\" value=\"10\" min=\"10\" max=\"30\"></div><button class=\"btn\">Confirmar</button></form>"
+    document.querySelector(".back-btn").addEventListener("click", () => {
+      resetGame();
+      this.display();
+    });
   }
 
   gameWin() {
@@ -64,7 +68,7 @@ class game {
     document.querySelector(".game").classList.add("game-win");
     
     document.querySelector(".game-win").innerHTML =
-      "<div class=\"game-win-container\"><h1>:)</h1><h2>Parabéns, vocé venceu!</h2> <h3>Tempo: " + totalTime + "s</h3><button class=\"btn restart\">Reiniciar</button>"
+      "<div class=\"game-win-container\"><h1>:)</h1><h2>Parabéns, você venceu!</h2> <h3>Tempo: " + totalTime + "s</h3><button class=\"btn restart\">Reiniciar</button>"
     document.querySelector(".restart").addEventListener("click", () => {
       location.reload();
     });
@@ -244,7 +248,7 @@ class cell {
         cell.setFlagged();
         cellClicked.classList.toggle('flagged');
         const flagIcon = cellClicked.appendChild(document.createElement("i"));
-        flagIcon.classList.add("fa-solid", "fa-flag", "fa-lg");
+        isMobileDevice() ? flagIcon.classList.add("fa-solid", "fa-flag", "fa-2x") : flagIcon.classList.add("fa-solid", "fa-flag", "fa-lg");
         flagIcon.style.color = "#ffffff";
     }
   
